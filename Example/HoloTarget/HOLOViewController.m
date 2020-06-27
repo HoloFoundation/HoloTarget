@@ -7,6 +7,8 @@
 //
 
 #import "HOLOViewController.h"
+#import <HoloTarget/HoloNavigator.h>
+#import <HoloTargetProtocolPool/HoloTargetProtocolPool.h>
 
 @interface HOLOViewController ()
 
@@ -14,16 +16,17 @@
 
 @implementation HOLOViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.title = @"HOLO";
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UIViewController *vc = [[HoloNavigator sharedInstance] matchViewControllerWithProtocol:@protocol(HoloDemoViewControllerAProtocol)];
+    [(UIViewController<HoloDemoViewControllerAProtocol> *)vc holoDemoViewControllerA:@"VC A"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

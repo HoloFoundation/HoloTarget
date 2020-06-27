@@ -1,0 +1,14 @@
+# For Example:
+#
+# ViewController:
+#     urls:
+#         - holo/vc
+#     protocols:
+#         - ViewControllerProtocol
+
+
+HoloDemoViewControllerA:
+    urls:
+        - holo/demoA/vcA
+    protocols:
+        - HoloDemoVCAProtocol

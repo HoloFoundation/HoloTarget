@@ -1,9 +1,13 @@
-use_frameworks!
+#use_frameworks!
 
 platform :ios, '8.0'
 
 target 'HoloTarget_Example' do
   pod 'HoloTarget', :path => '../'
+  
+  pod 'HoloTargetDemoA', :path => '../HoloTargetDemoA'
+  pod 'HoloTargetDemoB', :path => '../HoloTargetDemoB'
+  pod 'HoloTargetProtocolPool', :path => '../HoloTargetProtocolPool'
 
   target 'HoloTarget_Tests' do
     inherit! :search_paths

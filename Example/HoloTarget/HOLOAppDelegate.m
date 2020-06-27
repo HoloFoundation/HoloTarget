@@ -7,12 +7,21 @@
 //
 
 #import "HOLOAppDelegate.h"
+#import "HOLOViewController.h"
 
 @implementation HOLOAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIViewController *vc = [HOLOViewController new];
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = nv;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

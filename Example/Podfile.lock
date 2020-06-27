@@ -1,0 +1,47 @@
+PODS:
+  - Aspects (1.4.1)
+  - HoloLifecycle (1.0.0):
+    - Aspects
+  - HoloTarget (0.1.0)
+  - HoloTargetDemoA (0.1.0):
+    - HoloLifecycle
+    - HoloTarget
+    - HoloTargetProtocolPool
+  - HoloTargetDemoB (0.1.0):
+    - HoloLifecycle
+    - HoloTarget
+    - HoloTargetProtocolPool
+  - HoloTargetProtocolPool (0.1.0)
+
+DEPENDENCIES:
+  - HoloTarget (from `../`)
+  - HoloTargetDemoA (from `../HoloTargetDemoA`)
+  - HoloTargetDemoB (from `../HoloTargetDemoB`)
+  - HoloTargetProtocolPool (from `../HoloTargetProtocolPool`)
+
+SPEC REPOS:
+  trunk:
+    - Aspects
+    - HoloLifecycle
+
+EXTERNAL SOURCES:
+  HoloTarget:
+    :path: "../"
+  HoloTargetDemoA:
+    :path: "../HoloTargetDemoA"
+  HoloTargetDemoB:
+    :path: "../HoloTargetDemoB"
+  HoloTargetProtocolPool:
+    :path: "../HoloTargetProtocolPool"
+
+SPEC CHECKSUMS:
+  Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
+  HoloLifecycle: b93ffcc09d36f18629b58a7f0d36d5535472be81
+  HoloTarget: b1e249b0ba5eb22b87ca9f773e2888c04ed21a64
+  HoloTargetDemoA: f80c6fc2431acb20b6fec93296dce12e0ea1756d
+  HoloTargetDemoB: cc774c615a66c1539e68d54507cf417b1ffe999f
+  HoloTargetProtocolPool: 628ea5ad13bb14d6c401dd35fe9d156bf7c6875e
+
+PODFILE CHECKSUM: b54dd3df3ed63f6297bcb6c020ac58a9793f47e5
+
+COCOAPODS: 1.9.1
