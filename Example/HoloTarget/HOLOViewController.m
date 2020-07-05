@@ -19,12 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"HOLO";
     
     [[HoloTarget sharedInstance] registAllTargetsFromYAML];
-
+    
     
     NSString *url = @"http://holo/demoA/vcA?a=1&b=2";
     
