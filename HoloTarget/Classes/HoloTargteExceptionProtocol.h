@@ -11,19 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HoloTargteExceptionProtocol <NSObject>
 
-- (void)holo_registFailedBecauseAlreadyRegistTheProtocol:(Protocol *)protocol forTarget:(Class)target;
+- (void)holo_registFailedForTarget:(Class)target withProtocol:(Protocol *)protocol;
 
-- (void)holo_registFailedBecauseConnotConformTheProtocol:(Protocol *)protocol forTarget:(Class)target;
+- (void)holo_registFailedForTarget:(Class)target withUrl:(NSString *)url;
 
-- (void)holo_registFailedBecauseAlreadyRegistTheUrl:(NSString *)url forTarget:(Class)target;
+- (void)holo_matchFailedWithProtocol:(Protocol *)protocol;
 
-- (void)holo_matchFailedBecauseNotRegistTheProtocol:(Protocol *)protocol;
-
-- (void)holo_matchFailedBecauseNotRegistTheUrl:(NSString *)url;
-
-- (void)holo_matchFailedBecauseNotViewContollerWithTheProtocol:(Protocol *)protocol;
-
-- (void)holo_matchFailedBecauseNotViewContollerWithTheUrl:(NSString *)url;
+- (void)holo_matchFailedWithUrl:(NSString *)url;
 
 @end
 

@@ -7,8 +7,8 @@
 
 #import "HoloTarget.h"
 #import <YAML-Framework/YAMLSerialization.h>
-#import "HoloTargetMacro.h"
 #import "NSString+HoloTargetUrlParser.h"
+#import "HoloTargetMacro.h"
 
 @interface HoloTarget ()
 
@@ -27,41 +27,77 @@
     return sharedInstance;
 }
 
-- (void)registTargetsFromYAML {
+- (void)registAllTargetsFromYAML {
     NSString *path = [[NSBundle mainBundle] pathForResource:@".HOLO_ALL_TARGETS" ofType:@"yaml"];
     NSInputStream *stream = [[NSInputStream alloc] initWithFileAtPath:path];
     NSDictionary *yaml = [YAMLSerialization objectWithYAMLStream:stream
                                                          options:kYAMLReadOptionStringScalars
                                                            error:nil];
     
+    if (![yaml isKindOfClass:NSDictionary.class]) {
+        HoloLog(@"[HoloTarget] Error for some one 'holo_target.yaml'.");
+        return;
+    }
+    
+    __block BOOL isSuccess = YES;
+    
     [yaml enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull cls, NSDictionary * _Nonnull dict, BOOL * _Nonnull stop) {
         
+        if (![cls isKindOfClass:NSString.class] || ![dict isKindOfClass:NSDictionary.class]) {
+            isSuccess = NO;
+            return;
+        }
+        
         NSArray<NSString *> *urls = dict[@"urls"];
-        [urls enumerateObjectsUsingBlock:^(NSString * _Nonnull url, NSUInteger idx, BOOL * _Nonnull stop) {
-            [[HoloTarget sharedInstance] registTarget:NSClassFromString(cls) withUrl:url];
-        }];
+        if ([urls isKindOfClass:NSArray.class]) {
+            [urls enumerateObjectsUsingBlock:^(NSString * _Nonnull url, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([url isKindOfClass:NSString.class]) {
+                    [self registTarget:NSClassFromString(cls) withUrl:url];
+                } else {
+                    isSuccess = NO;
+                }
+            }];
+        } else {
+            isSuccess = NO;
+        }
         
         NSArray<NSString *> *protocols = dict[@"protocols"];
-        [protocols enumerateObjectsUsingBlock:^(NSString * _Nonnull protocol, NSUInteger idx, BOOL * _Nonnull stop) {
-            [[HoloTarget sharedInstance] registTarget:NSClassFromString(cls) withProtocol:NSProtocolFromString(protocol)];
-        }];
+        if ([protocols isKindOfClass:NSArray.class]) {
+            [protocols enumerateObjectsUsingBlock:^(NSString * _Nonnull protocol, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([protocol isKindOfClass:NSString.class]) {
+                    [self registTarget:NSClassFromString(cls) withProtocol:NSProtocolFromString(protocol)];
+                } else {
+                    isSuccess = NO;
+                }
+            }];
+        } else {
+            isSuccess = NO;
+        }
         
     }];
+    
+    if (!isSuccess) {
+        HoloLog(@"[HoloTarget] Error for some one 'holo_target.yaml'.");
+    }
 }
 
 - (BOOL)registTarget:(Class)target withProtocol:(Protocol *)protocol {
-    if (self.targetMap[NSStringFromProtocol(protocol)]) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedBecauseAlreadyRegistTheProtocol:forTarget:)]) {
-            [self.exceptionProxy holo_registFailedBecauseAlreadyRegistTheProtocol:protocol forTarget:target];
-        } else {
-            HoloLog(@"regist failed because the protocol (%@) was already registered", NSStringFromProtocol(protocol));
-        }
-        return NO;
+    BOOL isSuccess = YES;
+    
+    if (!target || !protocol) {
+        HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the protocol (%@) is nil.", target, protocol);
+        isSuccess = NO;
+    } else if (self.targetMap[NSStringFromProtocol(protocol)]) {
+        HoloLog(@"[HoloTarget] Regist failed because the protocol (%@) was already registered.", protocol);
+        isSuccess = NO;
     } else if (![target conformsToProtocol:protocol]) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedBecauseConnotConformTheProtocol:forTarget:)]) {
-            [self.exceptionProxy holo_registFailedBecauseConnotConformTheProtocol:protocol forTarget:target];
-        } else {
-            HoloLog(@"regist failed because the target (%@) is not conform to the protocol (%@)", NSStringFromClass(target), NSStringFromProtocol(protocol));
+        HoloLog(@"[HoloTarget] Regist failed because the target (%@) is not conform to the protocol (%@).", target, protocol);
+        isSuccess = NO;
+    }
+    
+    if (!isSuccess) {
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedForTarget:withProtocol:)]) {
+            [self.exceptionProxy holo_registFailedForTarget:target withProtocol:protocol];
         }
         return NO;
     }
@@ -71,13 +107,21 @@
 }
 
 - (BOOL)registTarget:(Class)target withUrl:(NSString *)url {
+    BOOL isSuccess = YES;
+    
     url = [url holo_targetUrlPath];
     
-    if (self.targetMap[url]) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedBecauseAlreadyRegistTheUrl:forTarget:)]) {
-            [self.exceptionProxy holo_registFailedBecauseAlreadyRegistTheUrl:url forTarget:target];
-        } else {
-            HoloLog(@"regist failed because the url (%@) was already registered", url);
+    if (!target || !url) {
+        HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the url (%@) is nil.", target, url);
+        isSuccess = NO;
+    } else if (self.targetMap[url]) {
+        HoloLog(@"[HoloTarget] Regist failed because the url (%@) was already registered.", url);
+        isSuccess = NO;
+    }
+    
+    if (!isSuccess) {
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedForTarget:withUrl:)]) {
+            [self.exceptionProxy holo_registFailedForTarget:target withUrl:url];
         }
         return NO;
     }
@@ -87,33 +131,51 @@
 }
 
 - (nullable Class)matchTargetWithProtocol:(Protocol *)protocol {
-    Class target = self.targetMap[NSStringFromProtocol(protocol)];
-    if (target) {
-        return target;
+    if (!protocol) {
+        HoloLog(@"[HoloTarget] Match failed because the protocol (%@) is nil.", protocol);
+        
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
+            [self.exceptionProxy holo_matchFailedWithProtocol:protocol];
+        }
+        return nil;
     }
     
-    if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedBecauseNotRegistTheProtocol:)]) {
-        [self.exceptionProxy holo_matchFailedBecauseNotRegistTheProtocol:protocol];
-    } else {
-        HoloLog(@"match failed because the protocol (%@) was not registered", NSStringFromProtocol(protocol));
+    Class target = self.targetMap[NSStringFromProtocol(protocol)];
+    if (!target) {
+        HoloLog(@"[HoloTarget] Match failed because the protocol (%@) was not registered.", NSStringFromProtocol(protocol));
+        
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
+            [self.exceptionProxy holo_matchFailedWithProtocol:protocol];
+        }
+        return nil;
     }
-    return nil;
+    
+    return target;
 }
 
 - (nullable Class)matchTargetWithUrl:(NSString *)url {
     url = [url holo_targetUrlPath];
     
-    Class target = self.targetMap[url];
-    if (target) {
-        return target;
+    if (!url) {
+        HoloLog(@"[HoloTarget] Match failed because the url (%@) is nil.", url);
+        
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
+            [self.exceptionProxy holo_matchFailedWithUrl:url];
+        }
+        return nil;
     }
     
-    if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedBecauseNotRegistTheUrl:)]) {
-        [self.exceptionProxy holo_matchFailedBecauseNotRegistTheUrl:url];
-    } else {
-        HoloLog(@"match failed because the url (%@) was not registered", url);
+    Class target = self.targetMap[url];
+    if (!target) {
+        HoloLog(@"[HoloTarget] Match failed because the url (%@) was not registered.", url);
+        
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
+            [self.exceptionProxy holo_matchFailedWithUrl:url];
+        }
+        return nil;
     }
-    return nil;
+    
+    return target;
 }
 
 #pragma mark - getter

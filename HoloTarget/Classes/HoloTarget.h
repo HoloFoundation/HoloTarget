@@ -16,8 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HoloTargteExceptionProtocol> exceptionProxy;
 
-- (void)registTargetsFromYAML;
-
+- (void)registAllTargetsFromYAML;
 
 - (BOOL)registTarget:(Class)target withProtocol:(Protocol *)protocol;
 
