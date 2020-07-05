@@ -6,8 +6,12 @@
 //
 
 #import "HoloNavigator.h"
+#import <objc/runtime.h>
 #import "HoloTarget.h"
 #import "HoloTargetMacro.h"
+#import "NSString+HoloTargetUrlParser.h"
+
+static char KHoloNavigatorParamsKey;
 
 @implementation HoloNavigator
 
@@ -39,6 +43,10 @@
     Class target = [[HoloTarget sharedInstance] matchTargetWithUrl:url];
     UIViewController *vc = [target new];
     if ([vc isKindOfClass:UIViewController.class]) {
+        NSDictionary *targetParams = [url holo_targetUrlParams];
+        if (targetParams) {
+            objc_setAssociatedObject(vc, &KHoloNavigatorParamsKey, targetParams, OBJC_ASSOCIATION_COPY_NONATOMIC);
+        }
         return vc;
     } else if (vc) {
        if ([HoloTarget sharedInstance].exceptionProxy && [[HoloTarget sharedInstance] respondsToSelector:@selector(holo_matchFailedBecauseNotViewContollerWithTheProtocol:)]) {
@@ -48,6 +56,10 @@
        }
     }
     return nil;
+}
+
+- (NSDictionary *)matchUrlParamsWithViewController:(UIViewController *)viewController {
+    return objc_getAssociatedObject(viewController, &KHoloNavigatorParamsKey);
 }
 
 @end

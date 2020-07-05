@@ -7,6 +7,7 @@
 
 #import "HoloTarget.h"
 #import "HoloTargetMacro.h"
+#import "NSString+HoloTargetUrlParser.h"
 
 @interface HoloTarget ()
 
@@ -47,6 +48,8 @@
 }
 
 - (BOOL)registTarget:(Class)target withUrl:(NSString *)url {
+    url = [url holo_targetUrlScheme];
+    
     if (self.targetMap[url]) {
         if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedBecauseAlreadyRegistTheUrl:forTarget:)]) {
             [self.exceptionProxy holo_registFailedBecauseAlreadyRegistTheUrl:url forTarget:target];
@@ -75,6 +78,8 @@
 }
 
 - (nullable Class)matchTargetWithUrl:(NSString *)url {
+    url = [url holo_targetUrlScheme];
+    
     Class target = self.targetMap[url];
     if (target) {
         return target;

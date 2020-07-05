@@ -13,23 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
-//
-//- (nullable UIViewController *)popViewControllerAnimated:(BOOL)animated;
-//
-//- (nullable NSArray<__kindof UIViewController *> *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated;
-//
-//- (nullable NSArray<__kindof UIViewController *> *)popToRootViewControllerAnimated:(BOOL)animated;
-//
-//
-//- (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)animated completion:(void (^ __nullable)(void))completion;
-//
-//- (void)dismissViewControllerAnimated:(BOOL)animated completion:(void (^ __nullable)(void))completion;
-
-
 - (nullable UIViewController *)matchViewControllerWithProtocol:(Protocol *)protocol;
 
 - (nullable UIViewController *)matchViewControllerWithUrl:(NSString *)url;
+
+- (nullable NSDictionary *)matchUrlParamsWithViewController:(UIViewController *)viewController;
 
 @end
 
