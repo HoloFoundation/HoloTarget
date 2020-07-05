@@ -26,8 +26,8 @@
     if ([vc isKindOfClass:UIViewController.class]) {
         return vc;
     } else if (vc) {
-        if ([HoloTarget sharedInstance].exceptionProxy && [[HoloTarget sharedInstance] respondsToSelector:@selector(matchFailedBecauseNotViewContollerWithTheProtocol:)]) {
-            [[HoloTarget sharedInstance].exceptionProxy matchFailedBecauseNotViewContollerWithTheProtocol:protocol];
+        if ([HoloTarget sharedInstance].exceptionProxy && [[HoloTarget sharedInstance] respondsToSelector:@selector(holo_matchFailedBecauseNotViewContollerWithTheProtocol:)]) {
+            [[HoloTarget sharedInstance].exceptionProxy holo_matchFailedBecauseNotViewContollerWithTheProtocol:protocol];
         } else {
             HoloLog(@"match failed because the target (%@) is not kind of UIViewController", NSStringFromClass(target));
         }
@@ -41,8 +41,8 @@
     if ([vc isKindOfClass:UIViewController.class]) {
         return vc;
     } else if (vc) {
-       if ([HoloTarget sharedInstance].exceptionProxy && [[HoloTarget sharedInstance] respondsToSelector:@selector(matchFailedBecauseNotViewContollerWithTheProtocol:)]) {
-           [[HoloTarget sharedInstance].exceptionProxy matchFailedBecauseNotViewContollerWithTheUrl:url];
+       if ([HoloTarget sharedInstance].exceptionProxy && [[HoloTarget sharedInstance] respondsToSelector:@selector(holo_matchFailedBecauseNotViewContollerWithTheProtocol:)]) {
+           [[HoloTarget sharedInstance].exceptionProxy holo_matchFailedBecauseNotViewContollerWithTheUrl:url];
        } else {
            HoloLog(@"match failed because the target (%@) is not kind of UIViewController", NSStringFromClass(target));
        }

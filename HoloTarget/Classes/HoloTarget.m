@@ -27,15 +27,15 @@
 
 - (BOOL)registTarget:(Class)target withProtocol:(Protocol *)protocol {
     if (self.targetMap[NSStringFromProtocol(protocol)]) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(registFailedBecauseAlreadyRegistTheProtocol:forTarget:)]) {
-            [self.exceptionProxy registFailedBecauseAlreadyRegistTheProtocol:protocol forTarget:target];
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedBecauseAlreadyRegistTheProtocol:forTarget:)]) {
+            [self.exceptionProxy holo_registFailedBecauseAlreadyRegistTheProtocol:protocol forTarget:target];
         } else {
             HoloLog(@"regist failed because the protocol (%@) was already registered", NSStringFromProtocol(protocol));
         }
         return NO;
     } else if (![target conformsToProtocol:protocol]) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(registFailedBecauseConnotConformTheProtocol:forTarget:)]) {
-            [self.exceptionProxy registFailedBecauseConnotConformTheProtocol:protocol forTarget:target];
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedBecauseConnotConformTheProtocol:forTarget:)]) {
+            [self.exceptionProxy holo_registFailedBecauseConnotConformTheProtocol:protocol forTarget:target];
         } else {
             HoloLog(@"regist failed because the target (%@) is not conform to the protocol (%@)", NSStringFromClass(target), NSStringFromProtocol(protocol));
         }
@@ -48,8 +48,8 @@
 
 - (BOOL)registTarget:(Class)target withUrl:(NSString *)url {
     if (self.targetMap[url]) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(registFailedBecauseAlreadyRegistTheUrl:forTarget:)]) {
-            [self.exceptionProxy registFailedBecauseAlreadyRegistTheUrl:url forTarget:target];
+        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedBecauseAlreadyRegistTheUrl:forTarget:)]) {
+            [self.exceptionProxy holo_registFailedBecauseAlreadyRegistTheUrl:url forTarget:target];
         } else {
             HoloLog(@"regist failed because the url (%@) was already registered", url);
         }
@@ -66,8 +66,8 @@
         return target;
     }
     
-    if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(matchFailedBecauseNotRegistTheProtocol:)]) {
-        [self.exceptionProxy matchFailedBecauseNotRegistTheProtocol:protocol];
+    if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedBecauseNotRegistTheProtocol:)]) {
+        [self.exceptionProxy holo_matchFailedBecauseNotRegistTheProtocol:protocol];
     } else {
         HoloLog(@"match failed because the protocol (%@) was not registered", NSStringFromProtocol(protocol));
     }
@@ -80,8 +80,8 @@
         return target;
     }
     
-    if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(matchFailedBecauseNotRegistTheUrl:)]) {
-        [self.exceptionProxy matchFailedBecauseNotRegistTheUrl:url];
+    if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedBecauseNotRegistTheUrl:)]) {
+        [self.exceptionProxy holo_matchFailedBecauseNotRegistTheUrl:url];
     } else {
         HoloLog(@"match failed because the url (%@) was not registered", url);
     }

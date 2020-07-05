@@ -11,19 +11,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HoloTargteExceptionProtocol <NSObject>
 
-- (void)registFailedBecauseAlreadyRegistTheProtocol:(Protocol *)protocol forTarget:(Class)target;
+- (void)holo_registFailedBecauseAlreadyRegistTheProtocol:(Protocol *)protocol forTarget:(Class)target;
 
-- (void)registFailedBecauseConnotConformTheProtocol:(Protocol *)protocol forTarget:(Class)target;
+- (void)holo_registFailedBecauseConnotConformTheProtocol:(Protocol *)protocol forTarget:(Class)target;
 
-- (void)registFailedBecauseAlreadyRegistTheUrl:(NSString *)url forTarget:(Class)target;
+- (void)holo_registFailedBecauseAlreadyRegistTheUrl:(NSString *)url forTarget:(Class)target;
 
-- (void)matchFailedBecauseNotRegistTheProtocol:(Protocol *)protocol;
+- (void)holo_matchFailedBecauseNotRegistTheProtocol:(Protocol *)protocol;
 
-- (void)matchFailedBecauseNotRegistTheUrl:(NSString *)url;
+- (void)holo_matchFailedBecauseNotRegistTheUrl:(NSString *)url;
 
-- (void)matchFailedBecauseNotViewContollerWithTheProtocol:(Protocol *)protocol;
+- (void)holo_matchFailedBecauseNotViewContollerWithTheProtocol:(Protocol *)protocol;
 
-- (void)matchFailedBecauseNotViewContollerWithTheUrl:(NSString *)url;
+- (void)holo_matchFailedBecauseNotViewContollerWithTheUrl:(NSString *)url;
 
 @end
 
