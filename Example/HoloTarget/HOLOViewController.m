@@ -23,7 +23,10 @@
     
     self.title = @"HOLO";
     
-    NSString *url = @"http://abc/def?a=1&b=2";
+    [[HoloTarget sharedInstance] registTargetsFromYAML];
+
+    
+    NSString *url = @"http://holo/demoA/vcA?a=1&b=2";
     
     [[HoloTarget sharedInstance] registTarget:UIViewController.class withUrl:url];
     
@@ -31,7 +34,8 @@
     
     NSDictionary *params = [HoloNavigator matchUrlParamsWithViewController:vc];
     
-    NSLog(@"----%@", params);
+    NSLog(@"----vc:%@---params:%@", vc,  params);
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

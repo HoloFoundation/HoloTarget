@@ -13,7 +13,7 @@
 @implementation HoloTargetDemoALifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey,id> *)launchOptions {
-    [[HoloTarget sharedInstance] registTarget:HoloDemoViewControllerA.class withProtocol:@protocol(HoloDemoViewControllerAProtocol)];
+//    [[HoloTarget sharedInstance] registTarget:HoloDemoViewControllerA.class withProtocol:@protocol(HoloDemoViewControllerAProtocol)];
     return YES;
 }
 

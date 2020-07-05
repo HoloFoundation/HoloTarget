@@ -1,0 +1,18 @@
+# Requirement: name your file holo_target.yaml
+# example
+#
+# HoloViewController:
+#     urls:
+#         - holo/vc
+#     protocols:
+#         - HoloViewControllerProtocol
+#
+# HoloViewController2:
+#     urls:
+#         - holo/vc1
+#         - holo/vc2
+#     protocols:
+#         - HoloViewControllerProtocol1
+#         - HoloViewControllerProtocol2
+#
+# etc ...

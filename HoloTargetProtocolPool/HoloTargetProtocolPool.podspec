@@ -33,9 +33,9 @@ TODO: Add long description of the pod here.
   s.source_files = 'HoloTargetProtocolPool/Classes/**/*'
   
 #  s.resources = ['HoloTargetProtocolPool/Assets/**/*']
-  s.resource_bundles = {
-    'HoloTargetProtocolPool' => ['HoloTargetProtocolPool/Assets/**/*']
-  }
+#  s.resource_bundles = {
+#    'HoloTargetProtocolPool' => ['HoloTargetProtocolPool/Assets/**/*']
+#  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

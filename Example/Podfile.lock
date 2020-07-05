@@ -2,7 +2,8 @@ PODS:
   - Aspects (1.4.1)
   - HoloLifecycle (1.0.0):
     - Aspects
-  - HoloTarget (0.1.0)
+  - HoloTarget (0.1.0):
+    - YAML-Framework
   - HoloTargetDemoA (0.1.0):
     - HoloLifecycle
     - HoloTarget
@@ -12,6 +13,9 @@ PODS:
     - HoloTarget
     - HoloTargetProtocolPool
   - HoloTargetProtocolPool (0.1.0)
+  - LibYAML (0.1.4)
+  - YAML-Framework (0.0.2):
+    - LibYAML (~> 0.1.4)
 
 DEPENDENCIES:
   - HoloTarget (from `../`)
@@ -23,6 +27,8 @@ SPEC REPOS:
   trunk:
     - Aspects
     - HoloLifecycle
+    - LibYAML
+    - YAML-Framework
 
 EXTERNAL SOURCES:
   HoloTarget:
@@ -37,10 +43,12 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   HoloLifecycle: b93ffcc09d36f18629b58a7f0d36d5535472be81
-  HoloTarget: b1e249b0ba5eb22b87ca9f773e2888c04ed21a64
+  HoloTarget: 0d778ddd4984c6d7692de369fcb9470a6c6b8412
   HoloTargetDemoA: f80c6fc2431acb20b6fec93296dce12e0ea1756d
   HoloTargetDemoB: cc774c615a66c1539e68d54507cf417b1ffe999f
-  HoloTargetProtocolPool: 628ea5ad13bb14d6c401dd35fe9d156bf7c6875e
+  HoloTargetProtocolPool: 34c1ca43684692b602d0dfe57fc712fa0d9c07c0
+  LibYAML: 3af2c5adf3a40dff936d087aa6a77edc10036bc5
+  YAML-Framework: 6fe698e19d39d778829f5937e39d1e6bc12afd7b
 
 PODFILE CHECKSUM: b54dd3df3ed63f6297bcb6c020ac58a9793f47e5
 

@@ -1,0 +1,25 @@
+# example
+#
+# HoloViewController:
+#     urls:
+#         - holo/vc
+#     protocols:
+#         - HoloViewControllerProtocol
+#
+# HoloViewController2:
+#     urls:
+#         - holo/vc1
+#         - holo/vc2
+#     protocols:
+#         - HoloViewControllerProtocol1
+#         - HoloViewControllerProtocol2
+#
+# etc ...
+
+
+HoloDemoViewControllerB:
+    urls:
+        - holo/demoB/vcB1
+        - holo/demoB/vcB2
+    protocols:
+        - HoloDemoViewControllerBProtocol
