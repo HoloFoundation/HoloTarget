@@ -178,6 +178,22 @@
     return target;
 }
 
+- (nullable id)matchTargetInstanceWithProtocol:(Protocol *)protocol {
+    Class cls = [self matchTargetWithProtocol:protocol];
+    if (cls) {
+        return [cls new];
+    }
+    return nil;
+}
+
+- (nullable id)matchTargetInstanceWithUrl:(NSString *)url {
+    Class cls = [self matchTargetWithUrl:url];
+    if (cls) {
+        return [cls new];
+    }
+    return nil;
+}
+
 #pragma mark - getter
 - (NSMutableDictionary<NSString *, Class> *)targetMap {
     if (!_targetMap) {

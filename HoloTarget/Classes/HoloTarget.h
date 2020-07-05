@@ -26,6 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable Class)matchTargetWithUrl:(NSString *)url;
 
+- (nullable id)matchTargetInstanceWithProtocol:(Protocol *)protocol;
+
+- (nullable id)matchTargetInstanceWithUrl:(NSString *)url;
+
 @end
 
 NS_ASSUME_NONNULL_END

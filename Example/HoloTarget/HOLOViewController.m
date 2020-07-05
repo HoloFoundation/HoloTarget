@@ -38,9 +38,25 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    // example 1
     UIViewController *vc = [HoloNavigator matchViewControllerWithProtocol:@protocol(HoloDemoViewControllerAProtocol)];
     [(UIViewController<HoloDemoViewControllerAProtocol> *)vc holoDemoViewControllerA:@"VC A"];
     [self.navigationController pushViewController:vc animated:YES];
+    
+    // example 2
+//    id<HoloTargetDemoAProtocol> target = [[HoloTarget sharedInstance] matchTargetInstanceWithProtocol:@protocol(HoloTargetDemoAProtocol)];
+//    UIViewController *vc = [target viewControllerAWithTitle:@"VC"];
+//    [self.navigationController pushViewController:vc animated:YES];
+    
+    // example 3
+//    id<HoloTargetDemoAProtocol> target = [[HoloTarget sharedInstance] matchTargetInstanceWithProtocol:@protocol(HoloTargetDemoAProtocol)];
+//    UIViewController *vc = [target viewControllerA2WithTitle:@"VC2"];
+//    [self.navigationController pushViewController:vc animated:YES];
+    
+    // example 4
+//    Class cls = [[HoloTarget sharedInstance] matchTargetWithProtocol:@protocol(HoloDemoViewControllerAProtocol)];
+//    UIViewController *vc = [[cls alloc] initWithTitle:@"123"];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

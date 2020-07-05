@@ -11,3 +11,8 @@ HoloDemoViewControllerA:
         - holo/demoA/vcA
     protocols:
         - HoloDemoViewControllerAProtocol
+
+HoloTargetDemoAMainTarget:
+    protocols:
+        - HoloTargetDemoAProtocol
+

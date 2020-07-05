@@ -10,5 +10,6 @@
 
 #import "HoloDemoViewControllerAProtocol.h"
 #import "HoloDemoViewControllerBProtocol.h"
+#import "HoloTargetDemoAProtocol.h"
 
 #endif /* HoloTargetProtocolPool_h */
