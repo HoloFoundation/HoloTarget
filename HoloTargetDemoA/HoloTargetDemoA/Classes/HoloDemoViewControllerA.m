@@ -21,7 +21,7 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    UIViewController *vc = [[HoloNavigator sharedInstance] matchViewControllerWithProtocol:@protocol(HoloDemoViewControllerBProtocol)];
+    UIViewController *vc = [HoloNavigator matchViewControllerWithProtocol:@protocol(HoloDemoViewControllerBProtocol)];
     [(UIViewController<HoloDemoViewControllerBProtocol> *)vc holoDemoViewControllerB:@"VC B"];
     [self.navigationController pushViewController:vc animated:YES];
 }

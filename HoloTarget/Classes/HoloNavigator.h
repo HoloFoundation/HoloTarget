@@ -11,13 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HoloNavigator : NSObject
 
-+ (instancetype)sharedInstance;
++ (nullable UIViewController *)matchViewControllerWithProtocol:(Protocol *)protocol;
 
-- (nullable UIViewController *)matchViewControllerWithProtocol:(Protocol *)protocol;
++ (nullable UIViewController *)matchViewControllerWithUrl:(NSString *)url;
 
-- (nullable UIViewController *)matchViewControllerWithUrl:(NSString *)url;
-
-- (nullable NSDictionary *)matchUrlParamsWithViewController:(UIViewController *)viewController;
++ (nullable NSDictionary *)matchUrlParamsWithViewController:(UIViewController *)viewController;
 
 @end
 

@@ -15,16 +15,7 @@ static char KHoloNavigatorParamsKey;
 
 @implementation HoloNavigator
 
-+ (instancetype)sharedInstance {
-    static HoloNavigator *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [HoloNavigator new];
-    });
-    return sharedInstance;
-}
-
-- (nullable UIViewController *)matchViewControllerWithProtocol:(Protocol *)protocol {
++ (nullable UIViewController *)matchViewControllerWithProtocol:(Protocol *)protocol {
     Class target = [[HoloTarget sharedInstance] matchTargetWithProtocol:protocol];
     UIViewController *vc = [target new];
     if ([vc isKindOfClass:UIViewController.class]) {
@@ -39,7 +30,7 @@ static char KHoloNavigatorParamsKey;
     return nil;
 }
 
-- (nullable UIViewController *)matchViewControllerWithUrl:(NSString *)url {
++ (nullable UIViewController *)matchViewControllerWithUrl:(NSString *)url {
     Class target = [[HoloTarget sharedInstance] matchTargetWithUrl:url];
     UIViewController *vc = [target new];
     if ([vc isKindOfClass:UIViewController.class]) {
@@ -58,7 +49,7 @@ static char KHoloNavigatorParamsKey;
     return nil;
 }
 
-- (NSDictionary *)matchUrlParamsWithViewController:(UIViewController *)viewController {
++ (NSDictionary *)matchUrlParamsWithViewController:(UIViewController *)viewController {
     return objc_getAssociatedObject(viewController, &KHoloNavigatorParamsKey);
 }
 
