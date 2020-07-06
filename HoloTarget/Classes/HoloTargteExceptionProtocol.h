@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)holo_matchFailedWithUrl:(NSString *)url;
 
+- (void)holo_unrecognizedSelectorSentToTarget:(id)target selector:(SEL)selector;
+
 @end
 
 NS_ASSUME_NONNULL_END

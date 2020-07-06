@@ -1,8 +1,8 @@
 //
-//  NSObject+HoloUnrecognizedSelector.h
+//  NSObject+HoloTargetUnrecognizedSelector.h
 //  HoloTarget
 //
-//  Created by 与佳期 on 2020/7/5.
+//  Created by Honglou Gong on 2020/7/6.
 //
 
 #import <Foundation/Foundation.h>
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface NSObject (HoloUnrecognizedSelector)
+@interface NSObject (HoloTargetUnrecognizedSelector)
 
 + (void)holo_setupUnrecognizedSelectorStubProxy;
 
