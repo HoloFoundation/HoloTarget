@@ -31,25 +31,28 @@
 @implementation NSObject (HoloTargetUnrecognizedSelector)
 
 + (void)holo_setupUnrecognizedSelectorStubProxy {
-    Class class = [self class];
-    
-    SEL originalSelector = @selector(forwardingTargetForSelector:);
-    SEL swizzledSelector = @selector(_holo_forwardingTargetForSelector:);
-    
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    
-    BOOL success = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
-    if (success) {
-        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class class = [self class];
+        
+        SEL originalSelector = @selector(forwardingTargetForSelector:);
+        SEL swizzledSelector = @selector(_holo_forwardingTargetForSelector:);
+        
+        Method originalMethod = class_getInstanceMethod(class, originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        
+        BOOL success = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+        if (success) {
+            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod, swizzledMethod);
+        }
+    });
 }
 
 - (id)_holo_forwardingTargetForSelector:(SEL)aSelector {
     // Aspects hook 会有问题：动态交换了 forwardInvocation: 方法 (aspect_swizzleForwardInvocation) !!!
-    // 问题：怎么判断 这个方法被处理过了，这里不再处理，直接 return nil ?
+    // 问题：怎么判断 这个方法被处理过了，这里不再处理，直接 return nil ???
     
     // 自己要处理的话, 直接返回
     if ([self _holo_methodHasOverwrited:@selector(resolveInstanceMethod:) cls:self.class]) {
