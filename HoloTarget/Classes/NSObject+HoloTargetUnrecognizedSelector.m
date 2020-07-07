@@ -13,16 +13,16 @@
 @implementation HoloTargetStubProxy
 
 + (BOOL)resolveInstanceMethod:(SEL)sel {
-    // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
     class_addMethod([self class], sel, imp_implementationWithBlock(^{
         // 收集堆栈, 上报 Crash
-//        HoloLog(@"-[HoloDemoViewControllerA holoDemoViewControllerA:]: unrecognized selector sent to instance 0x7fbb2f71c9c0");
-//
-//        if ([HoloTarget sharedInstance].exceptionProxy &&
-//            [[HoloTarget sharedInstance].exceptionProxy respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
-//            [[HoloTarget sharedInstance].exceptionProxy holo_unrecognizedSelectorSentToTarget:self selector:sel];
-//        }
+        HoloLog(@"[HoloTarget] Unrecognized selector (%@)", NSStringFromSelector(sel));
+        
+        if ([HoloTarget sharedInstance].exceptionProxy &&
+            [[HoloTarget sharedInstance].exceptionProxy respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
+            [[HoloTarget sharedInstance].exceptionProxy holo_unrecognizedSelectorSentToTarget:self selector:sel];
+        }
     }), "v@:");
+    // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
     return YES;
 }
 
