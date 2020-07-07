@@ -61,7 +61,7 @@
     return [HoloTargetStubProxy new];
 }
 
-// 判断 cls 是否重写了 sel 方法, 递归调用判断但不包括 NSObject
+// 判断 cls 是否重写了 sel 方法, 递归调用判断父类但不包括 NSObject
 - (BOOL)_holo_methodHasOverwrited:(SEL)sel cls:(Class)cls {
     unsigned int methodCount = 0;
     Method *methods = class_copyMethodList(cls, &methodCount);
@@ -74,7 +74,6 @@
     }
     free(methods);
     
-    // 可能父类实现了这个 sel, 一直遍历到基类 NSObject 为止
     if ([cls superclass] != [NSObject class]) {
         return [self _holo_methodHasOverwrited:sel cls:[cls superclass]];
     }
