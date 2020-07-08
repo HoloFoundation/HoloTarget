@@ -7,7 +7,6 @@
 
 #import "NSObject+HoloTargetUnrecognizedSelector.h"
 #import <objc/runtime.h>
-#import "HoloTargetMacro.h"
 #import "HoloTarget.h"
 
 @implementation HoloTargetStubProxy
@@ -17,10 +16,10 @@
         // 收集堆栈, 上报 Crash
         HoloLog(@"[HoloTarget] Unrecognized selector (%@)", NSStringFromSelector(sel));
         
-        if ([HoloTarget sharedInstance].exceptionProxy &&
-            [[HoloTarget sharedInstance].exceptionProxy respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
-            [[HoloTarget sharedInstance].exceptionProxy holo_unrecognizedSelectorSentToTarget:self selector:sel];
-        }
+//        if ([HoloTarget sharedInstance].exceptionProxy &&
+//            [[HoloTarget sharedInstance].exceptionProxy respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
+//            [[HoloTarget sharedInstance].exceptionProxy holo_unrecognizedSelectorSentToTarget: selector:sel];
+//        }
     }), "v@:");
     // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
     return YES;
@@ -51,8 +50,9 @@
 }
 
 - (id)_holo_forwardingTargetForSelector:(SEL)aSelector {
-    // Aspects hook 会有问题：动态交换了 forwardInvocation: 方法 (aspect_swizzleForwardInvocation) !!!
-    // 问题：怎么判断 这个方法被处理过了，这里不再处理，直接 return nil ???
+    // Aspects hook 会有问题：动态交换了 forwardInvocation: 方法 (aspect_swizzleForwardInvocation)
+    // 问题：怎么判断某个方法被 hook 过了 ?
+    // 判断 'forwardingTargetForSelector:'、'resolveInstanceMethod:'、'forwardInvocation:' 被处理过了的话，直接 return nil.
     
     // 自己要处理的话, 直接返回
     if ([self _holo_methodHasOverwrited:@selector(resolveInstanceMethod:) cls:self.class]) {

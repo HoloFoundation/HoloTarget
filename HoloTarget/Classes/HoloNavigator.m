@@ -8,8 +8,6 @@
 #import "HoloNavigator.h"
 #import <objc/runtime.h>
 #import "HoloTarget.h"
-#import "HoloTargetMacro.h"
-#import "NSString+HoloTargetUrlParser.h"
 
 static char KHoloNavigatorParamsKey;
 
@@ -24,7 +22,7 @@ static char KHoloNavigatorParamsKey;
         if ([HoloTarget sharedInstance].exceptionProxy && [[HoloTarget sharedInstance] respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
             [[HoloTarget sharedInstance].exceptionProxy holo_matchFailedWithProtocol:protocol];
         }
-        HoloLog(@"[HoloTarget] Match failed because the target (%@) is not kind of UIViewController, with the protocol (%@).", target, protocol);
+        HoloLog(@"[HoloTarget] Match failed because the target (%@) is not kind of UIViewController, with the protocol (%@).", target, NSStringFromProtocol(protocol));
     }
     return nil;
 }

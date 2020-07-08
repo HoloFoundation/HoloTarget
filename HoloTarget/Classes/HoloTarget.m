@@ -7,8 +7,6 @@
 
 #import "HoloTarget.h"
 #import <YAML-Framework/YAMLSerialization.h>
-#import "NSString+HoloTargetUrlParser.h"
-#import "HoloTargetMacro.h"
 
 @interface HoloTarget ()
 
@@ -84,14 +82,15 @@
 - (BOOL)registTarget:(Class)target withProtocol:(Protocol *)protocol {
     BOOL isSuccess = YES;
     
-    if (!target || !protocol) {
-        HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the protocol (%@) is nil.", target, protocol);
+    NSString *protocolString = NSStringFromProtocol(protocol);
+    if (!target || !protocolString) {
+        HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the protocol (%@) is nil.", target, protocolString);
         isSuccess = NO;
-    } else if (self.targetMap[NSStringFromProtocol(protocol)]) {
-        HoloLog(@"[HoloTarget] Regist failed because the protocol (%@) was already registered.", protocol);
+    } else if (self.targetMap[protocolString]) {
+        HoloLog(@"[HoloTarget] Regist failed because the protocol (%@) was already registered.", protocolString);
         isSuccess = NO;
     } else if (![target conformsToProtocol:protocol]) {
-        HoloLog(@"[HoloTarget] Regist failed because the target (%@) is not conform to the protocol (%@).", target, protocol);
+        HoloLog(@"[HoloTarget] Regist failed because the target (%@) is not conform to the protocol (%@).", target, protocolString);
         isSuccess = NO;
     }
     
@@ -102,7 +101,7 @@
         return NO;
     }
     
-    self.targetMap[NSStringFromProtocol(protocol)] = target;
+    self.targetMap[protocolString] = target;
     return YES;
 }
 
@@ -131,8 +130,10 @@
 }
 
 - (nullable Class)matchTargetWithProtocol:(Protocol *)protocol {
-    if (!protocol) {
-        HoloLog(@"[HoloTarget] Match failed because the protocol (%@) is nil.", protocol);
+    
+    NSString *protocolString = NSStringFromProtocol(protocol);
+    if (!protocolString) {
+        HoloLog(@"[HoloTarget] Match failed because the protocol (%@) is nil.", protocolString);
         
         if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
             [self.exceptionProxy holo_matchFailedWithProtocol:protocol];
@@ -140,9 +141,9 @@
         return nil;
     }
     
-    Class target = self.targetMap[NSStringFromProtocol(protocol)];
+    Class target = self.targetMap[protocolString];
     if (!target) {
-        HoloLog(@"[HoloTarget] Match failed because the protocol (%@) was not registered.", NSStringFromProtocol(protocol));
+        HoloLog(@"[HoloTarget] Match failed because the protocol (%@) was not registered.", protocolString);
         
         if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
             [self.exceptionProxy holo_matchFailedWithProtocol:protocol];
