@@ -129,7 +129,6 @@
 }
 
 - (nullable Class)matchTargetWithProtocol:(Protocol *)protocol {
-    
     NSString *protocolString = NSStringFromProtocol(protocol);
     if (!protocolString) {
         HoloLog(@"[HoloTarget] Match failed because the protocol (%@) is nil.", protocolString);
@@ -154,7 +153,6 @@
 }
 
 - (nullable Class)matchTargetWithUrl:(NSString *)url {
-    
     NSString *path = [url holo_targetUrlPath];
     if (!path) {
         HoloLog(@"[HoloTarget] Match failed because the url path (%@) is nil.", path);
