@@ -25,7 +25,7 @@
     [[HoloTarget sharedInstance] registAllTargetsFromYAML];
     
     
-    NSString *url = @"http://holo/demoA/vc?a=1&b=2";
+    NSString *url = @"holo://holo/demoA/vc?a=1&b=2";
     
     [[HoloTarget sharedInstance] registTarget:UIViewController.class withUrl:url];
     

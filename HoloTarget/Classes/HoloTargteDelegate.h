@@ -1,16 +1,20 @@
 //
-//  HoloTargteExceptionProtocol.h
+//  HoloTargteDelegate.h
 //  HoloTarget
 //
-//  Created by 与佳期 on 2020/6/25.
+//  Created by Honglou Gong on 2020/7/8.
 //
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol HoloTargteExceptionProtocol <NSObject>
+@protocol HoloTargteDelegate <NSObject>
 
+/// web viewcontroller
+- (UIViewController *)holo_matchWebViewControllerWithUrl:(NSString *)url;
+
+/// exception
 - (void)holo_registFailedForTarget:(Class)target withProtocol:(Protocol *)protocol;
 
 - (void)holo_registFailedForTarget:(Class)target withUrl:(NSString *)url;

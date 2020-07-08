@@ -95,8 +95,8 @@
     }
     
     if (!isSuccess) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedForTarget:withProtocol:)]) {
-            [self.exceptionProxy holo_registFailedForTarget:target withProtocol:protocol];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(holo_registFailedForTarget:withProtocol:)]) {
+            [self.delegate holo_registFailedForTarget:target withProtocol:protocol];
         }
         return NO;
     }
@@ -108,24 +108,23 @@
 - (BOOL)registTarget:(Class)target withUrl:(NSString *)url {
     BOOL isSuccess = YES;
     
-    url = [url holo_targetUrlPath];
-    
-    if (!target || !url) {
-        HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the url (%@) is nil.", target, url);
+    NSString *path = [url holo_targetUrlPath];
+    if (!target || !path) {
+        HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the url path (%@) is nil.", target, path);
         isSuccess = NO;
-    } else if (self.targetMap[url]) {
-        HoloLog(@"[HoloTarget] Regist failed because the url (%@) was already registered.", url);
+    } else if (self.targetMap[path]) {
+        HoloLog(@"[HoloTarget] Regist failed because the url path (%@) was already registered.", path);
         isSuccess = NO;
     }
     
     if (!isSuccess) {
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_registFailedForTarget:withUrl:)]) {
-            [self.exceptionProxy holo_registFailedForTarget:target withUrl:url];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(holo_registFailedForTarget:withUrl:)]) {
+            [self.delegate holo_registFailedForTarget:target withUrl:url];
         }
         return NO;
     }
     
-    self.targetMap[url] = target;
+    self.targetMap[path] = target;
     return YES;
 }
 
@@ -135,8 +134,8 @@
     if (!protocolString) {
         HoloLog(@"[HoloTarget] Match failed because the protocol (%@) is nil.", protocolString);
         
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
-            [self.exceptionProxy holo_matchFailedWithProtocol:protocol];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
+            [self.delegate holo_matchFailedWithProtocol:protocol];
         }
         return nil;
     }
@@ -145,8 +144,8 @@
     if (!target) {
         HoloLog(@"[HoloTarget] Match failed because the protocol (%@) was not registered.", protocolString);
         
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
-            [self.exceptionProxy holo_matchFailedWithProtocol:protocol];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(holo_matchFailedWithProtocol:)]) {
+            [self.delegate holo_matchFailedWithProtocol:protocol];
         }
         return nil;
     }
@@ -155,17 +154,13 @@
 }
 
 - (nullable Class)matchTargetWithUrl:(NSString *)url {
-//    NSString *scheme = [url holo_targetUrlScheme];
-//    if ([scheme.lowercaseString isEqualToString:@"http"] || [scheme.lowercaseString isEqualToString:@"https"]) {
-//        return WKWebView.class;
-//    }
     
     NSString *path = [url holo_targetUrlPath];
     if (!path) {
         HoloLog(@"[HoloTarget] Match failed because the url path (%@) is nil.", path);
         
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
-            [self.exceptionProxy holo_matchFailedWithUrl:url];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
+            [self.delegate holo_matchFailedWithUrl:url];
         }
         return nil;
     }
@@ -174,8 +169,8 @@
     if (!target) {
         HoloLog(@"[HoloTarget] Match failed because the url path (%@) was not registered.", path);
         
-        if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
-            [self.exceptionProxy holo_matchFailedWithUrl:path];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
+            [self.delegate holo_matchFailedWithUrl:url];
         }
         return nil;
     }

@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 #import "HoloNavigator.h"
+#import "HoloTargteDelegate.h"
 #import "NSString+HoloTargetUrlParser.h"
 #import "HoloTargetMacro.h"
-#import "HoloTargteExceptionProtocol.h"
 #import "HoloBaseTarget.h"
 #import "HoloBaseTargetViewController.h"
 
@@ -20,8 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 单例实现方法
 + (instancetype)sharedInstance;
 
-/// 异常代理
-@property (nonatomic, weak) id<HoloTargteExceptionProtocol> exceptionProxy;
+/// 代理 (web viewcontroller 及 exception)
+@property (nonatomic, weak) id<HoloTargteDelegate> delegate;
+
+/// 业务 scheme, 用于判断 url scheme 控制跳转
+@property (nonatomic, copy) NSString *businessScheme;
 
 /// 获取各个 Pod 内的 holo_target.yaml 文件进行注册 protocol 和 url
 - (void)registAllTargetsFromYAML;

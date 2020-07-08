@@ -15,9 +15,9 @@
     class_addMethod([self class], sel, imp_implementationWithBlock(^{
         HoloLog(@"[HoloTarget] -[%@ %@]: unrecognized selector.", self.class, NSStringFromSelector(sel));
         
-        if ([HoloTarget sharedInstance].exceptionProxy &&
-            [[HoloTarget sharedInstance].exceptionProxy respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
-            [[HoloTarget sharedInstance].exceptionProxy holo_unrecognizedSelectorSentToTarget:self.class selector:sel];
+        if ([HoloTarget sharedInstance].delegate &&
+            [[HoloTarget sharedInstance].delegate respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
+            [[HoloTarget sharedInstance].delegate holo_unrecognizedSelectorSentToTarget:self.class selector:sel];
         }
     }), "v@:");
     return YES;
