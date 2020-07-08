@@ -9,7 +9,6 @@ PODS:
     - HoloTarget
     - HoloTargetProtocolPool
   - HoloTargetDemoB (0.1.0):
-    - HoloLifecycle
     - HoloTarget
     - HoloTargetProtocolPool
   - HoloTargetProtocolPool (0.1.0)
@@ -45,7 +44,7 @@ SPEC CHECKSUMS:
   HoloLifecycle: b93ffcc09d36f18629b58a7f0d36d5535472be81
   HoloTarget: 0d778ddd4984c6d7692de369fcb9470a6c6b8412
   HoloTargetDemoA: f80c6fc2431acb20b6fec93296dce12e0ea1756d
-  HoloTargetDemoB: cc774c615a66c1539e68d54507cf417b1ffe999f
+  HoloTargetDemoB: 13645ea889e3de55e66cd3744a047270fd0a9194
   HoloTargetProtocolPool: 34c1ca43684692b602d0dfe57fc712fa0d9c07c0
   LibYAML: 3af2c5adf3a40dff936d087aa6a77edc10036bc5
   YAML-Framework: 6fe698e19d39d778829f5937e39d1e6bc12afd7b

@@ -6,8 +6,8 @@
 //
 
 #import "HoloTargetDemoALifecycle.h"
-#import <HoloTarget/HoloTarget.h>
 #import <HoloTargetProtocolPool/HoloTargetProtocolPool.h>
+#import <HoloTarget/HoloTarget.h>
 #import "HoloDemoViewControllerA.h"
 
 @implementation HoloTargetDemoALifecycle
