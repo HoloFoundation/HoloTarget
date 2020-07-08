@@ -13,7 +13,7 @@
 
 + (BOOL)resolveInstanceMethod:(SEL)sel {
     class_addMethod([self class], sel, imp_implementationWithBlock(^{
-        HoloLog(@"[HoloTarget] -[%@ %@:]: unrecognized selector.", self.class, NSStringFromSelector(sel));
+        HoloLog(@"[HoloTarget] -[%@ %@]: unrecognized selector.", self.class, NSStringFromSelector(sel));
         
         if ([HoloTarget sharedInstance].exceptionProxy &&
             [[HoloTarget sharedInstance].exceptionProxy respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
