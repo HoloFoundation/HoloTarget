@@ -29,9 +29,9 @@ static char KHoloNavigatorParamsKey;
 + (nullable UIViewController *)matchViewControllerWithUrl:(NSString *)url {
     id target = [[HoloTarget sharedInstance] matchTargetInstanceWithUrl:url];
     if ([target isKindOfClass:UIViewController.class]) {
-        NSDictionary *targetParams = [url holo_targetUrlParams];
-        if (targetParams) {
-            objc_setAssociatedObject(target, &KHoloNavigatorParamsKey, targetParams, OBJC_ASSOCIATION_COPY_NONATOMIC);
+        NSDictionary *params = [url holo_targetUrlParams];
+        if (params) {
+            objc_setAssociatedObject(target, &KHoloNavigatorParamsKey, params, OBJC_ASSOCIATION_COPY_NONATOMIC);
         }
         return target;
     } else if (target) {

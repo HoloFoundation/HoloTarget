@@ -55,7 +55,7 @@
                     isSuccess = NO;
                 }
             }];
-        } else {
+        } else if (urls) {
             isSuccess = NO;
         }
         
@@ -68,7 +68,7 @@
                     isSuccess = NO;
                 }
             }];
-        } else {
+        } else if (protocols) {
             isSuccess = NO;
         }
         
@@ -155,10 +155,14 @@
 }
 
 - (nullable Class)matchTargetWithUrl:(NSString *)url {
-    url = [url holo_targetUrlPath];
+//    NSString *scheme = [url holo_targetUrlScheme];
+//    if ([scheme.lowercaseString isEqualToString:@"http"] || [scheme.lowercaseString isEqualToString:@"https"]) {
+//        return WKWebView.class;
+//    }
     
-    if (!url) {
-        HoloLog(@"[HoloTarget] Match failed because the url (%@) is nil.", url);
+    NSString *path = [url holo_targetUrlPath];
+    if (!path) {
+        HoloLog(@"[HoloTarget] Match failed because the url path (%@) is nil.", path);
         
         if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
             [self.exceptionProxy holo_matchFailedWithUrl:url];
@@ -166,12 +170,12 @@
         return nil;
     }
     
-    Class target = self.targetMap[url];
+    Class target = self.targetMap[path];
     if (!target) {
-        HoloLog(@"[HoloTarget] Match failed because the url (%@) was not registered.", url);
+        HoloLog(@"[HoloTarget] Match failed because the url path (%@) was not registered.", path);
         
         if (self.exceptionProxy && [self.exceptionProxy respondsToSelector:@selector(holo_matchFailedWithUrl:)]) {
-            [self.exceptionProxy holo_matchFailedWithUrl:url];
+            [self.exceptionProxy holo_matchFailedWithUrl:path];
         }
         return nil;
     }
