@@ -7,7 +7,6 @@
 //
 
 #import "HOLOViewController.h"
-#import <HoloTarget/HoloNavigator.h>
 #import <HoloTarget/HoloTarget.h>
 #import <HoloTargetProtocolPool/HoloTargetProtocolPool.h>
 
