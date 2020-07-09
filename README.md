@@ -16,19 +16,21 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 
 ```objc
-// 提供方提前注册（protocol）
+// 1、protocol 方式支持页面跳转
+// 提供方提前注册 protocol
 [[HoloTarget sharedInstance] registTarget:ViewController.class withProtocol:@protocol(ViewControllerProtocol)];
 
-// 调用方获取 vc 跳转（protocol）
+// 调用方根据 protocol 获取 vc 跳转
 UIViewController *vc = [HoloNavigator matchViewControllerWithProtocol:@protocol(ViewControllerProtocol)];
 [(UIViewController<ViewControllerProtocol> *)vc viewController:@"title"];
 [self.navigationController pushViewController:vc animated:YES];
     
     
-// 提供方提前注册（url）
+// 2、url 方式支持页面路由
+// 提供方提前注册 url
 [[HoloTarget sharedInstance] registTarget:ViewController.class withUrl:@"holo://demo/vc?a=1&b=2"];
 
-// 调用方获取 vc 跳转（url）
+// 调用方根据 url 获取 vc 跳转
 UIViewController *vc = [HoloNavigator matchViewControllerWithUrl:@"holo://demo/vc?a=1&b=2"];
 [self.navigationController pushViewController:vc animated:YES];
 // vc 内部获取入参
