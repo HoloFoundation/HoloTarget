@@ -10,7 +10,11 @@
 
 @interface HoloTarget ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, Class> *targetMap;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, Class> *protocolsMap;
+
+@property (nonatomic, strong) NSMutableDictionary<NSString *, Class> *urlsMap;
+
+@property (nonatomic, strong) dispatch_semaphore_t lock;
 
 @end
 
@@ -86,7 +90,7 @@
     if (!target || !protocolString) {
         HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the protocol (%@) is nil.", target, protocolString);
         isSuccess = NO;
-    } else if (self.targetMap[protocolString]) {
+    } else if (self.protocolsMap[protocolString]) {
         HoloLog(@"[HoloTarget] Regist failed because the protocol (%@) was already registered.", protocolString);
         isSuccess = NO;
     } else if (![target conformsToProtocol:protocol]) {
@@ -101,7 +105,9 @@
         return NO;
     }
     
-    self.targetMap[protocolString] = target;
+    HOLO_LOCK(self.lock);
+    self.protocolsMap[protocolString] = target;
+    HOLO_UNLOCK(self.lock);
     return YES;
 }
 
@@ -112,7 +118,7 @@
     if (!target || !path) {
         HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the url path (%@) is nil.", target, path);
         isSuccess = NO;
-    } else if (self.targetMap[path]) {
+    } else if (self.urlsMap[path]) {
         HoloLog(@"[HoloTarget] Regist failed because the url path (%@) was already registered.", path);
         isSuccess = NO;
     }
@@ -124,7 +130,9 @@
         return NO;
     }
     
-    self.targetMap[path] = target;
+    HOLO_LOCK(self.lock);
+    self.urlsMap[path] = target;
+    HOLO_UNLOCK(self.lock);
     return YES;
 }
 
@@ -139,7 +147,7 @@
         return nil;
     }
     
-    Class target = self.targetMap[protocolString];
+    Class target = self.protocolsMap[protocolString];
     if (!target) {
         HoloLog(@"[HoloTarget] Match failed because the protocol (%@) was not registered.", protocolString);
         
@@ -163,7 +171,7 @@
         return nil;
     }
     
-    Class target = self.targetMap[path];
+    Class target = self.urlsMap[path];
     if (!target) {
         HoloLog(@"[HoloTarget] Match failed because the url path (%@) was not registered.", path);
         
@@ -193,11 +201,25 @@
 }
 
 #pragma mark - getter
-- (NSMutableDictionary<NSString *, Class> *)targetMap {
-    if (!_targetMap) {
-        _targetMap = [NSMutableDictionary new];
+- (NSMutableDictionary<NSString *, Class> *)protocolsMap {
+    if (!_protocolsMap) {
+        _protocolsMap = [NSMutableDictionary new];
     }
-    return _targetMap;
+    return _protocolsMap;
+}
+
+- (NSMutableDictionary<NSString *, Class> *)urlsMap {
+    if (!_urlsMap) {
+        _urlsMap = [NSMutableDictionary new];
+    }
+    return _urlsMap;
+}
+
+- (dispatch_semaphore_t)lock {
+    if (!_lock) {
+        _lock = dispatch_semaphore_create(1);
+    }
+    return _lock;
 }
 
 @end
