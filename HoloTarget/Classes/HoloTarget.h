@@ -26,7 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// 业务 scheme, 用于判断 url scheme 控制跳转
 @property (nonatomic, copy) NSString *businessScheme;
 
-/// 获取各个 Pod 内的 holo_target.yaml 文件进行注册 protocol 和 url
+/// 获取各个 Pod 内的 holo_target.yaml 配置文件进行注册 protocol 和 url
+/// Requirement :  在主工程编译期 (Build Phases) 执行 holo_target_generator.rb 脚本
+/// Attention(1):  各个 pod 内创建名为 holo_target.yaml 的配置文件, 格式参见 holo_target_example.yaml
+/// Attention(2):  不要将 holo_target.yaml 配置文件存储在 Main Bundle 内, 避免互相覆盖
 - (void)registAllTargetsFromYAML;
 
 /// 根据 protocol 注册 target 类
