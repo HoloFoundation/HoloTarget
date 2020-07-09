@@ -15,7 +15,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 详细介绍参见博客地址：[组件化页面跳转及路由方案](http://gonghonglou.com/2020/07/07/pod-target/)
 
 
-```
+```objc
 // 提供方提前注册（protocol）
 [[HoloTarget sharedInstance] registTarget:ViewController.class withProtocol:@protocol(ViewControllerProtocol)];
 
