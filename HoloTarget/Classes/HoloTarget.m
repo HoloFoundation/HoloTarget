@@ -147,7 +147,9 @@
         return nil;
     }
     
+    HOLO_LOCK(self.lock);
     Class target = self.protocolsMap[protocolString];
+    HOLO_UNLOCK(self.lock);
     if (!target) {
         HoloLog(@"[HoloTarget] Match failed because the protocol (%@) was not registered.", protocolString);
         
@@ -171,7 +173,9 @@
         return nil;
     }
     
+    HOLO_LOCK(self.lock);
     Class target = self.urlsMap[path];
+    HOLO_UNLOCK(self.lock);
     if (!target) {
         HoloLog(@"[HoloTarget] Match failed because the url path (%@) was not registered.", path);
         
