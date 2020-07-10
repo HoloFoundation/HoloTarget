@@ -54,7 +54,8 @@
         if ([urls isKindOfClass:NSArray.class]) {
             [urls enumerateObjectsUsingBlock:^(NSString * _Nonnull url, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([url isKindOfClass:NSString.class]) {
-                    [self registTarget:NSClassFromString(cls) withUrl:url];
+                    BOOL success = [self registTarget:NSClassFromString(cls) withUrl:url];
+                    if (success) isSuccess = NO;
                 } else {
                     isSuccess = NO;
                 }
@@ -67,7 +68,8 @@
         if ([protocols isKindOfClass:NSArray.class]) {
             [protocols enumerateObjectsUsingBlock:^(NSString * _Nonnull protocol, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([protocol isKindOfClass:NSString.class]) {
-                    [self registTarget:NSClassFromString(cls) withProtocol:NSProtocolFromString(protocol)];
+                    BOOL success = [self registTarget:NSClassFromString(cls) withProtocol:NSProtocolFromString(protocol)];
+                    if (success) isSuccess = NO;
                 } else {
                     isSuccess = NO;
                 }
