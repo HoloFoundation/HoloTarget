@@ -6,7 +6,7 @@
 //
 
 #import "HoloTarget.h"
-#import <YAML-Framework/YAMLSerialization.h>
+#import "YAMLSerialization.h"
 
 @interface HoloTarget ()
 
