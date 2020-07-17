@@ -33,21 +33,49 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)registAllTargetsFromYAML;
 
 /// 根据 protocol 注册 target 类
+/// @param target   注册类
+/// @param protocol 注册协议
+/// @return         是否注册成功
 - (BOOL)registTarget:(Class)target withProtocol:(Protocol *)protocol;
 
+/// 根据 protocol 注册 target 类
+/// @param target   注册类
+/// @param protocol 注册协议
+/// @param force    覆盖注册
+/// @return         是否注册成功
+- (BOOL)registTarget:(Class)target withProtocol:(Protocol *)protocol force:(BOOL)force;
+
 /// 根据 url 注册 target 类
+/// @param target   注册类
+/// @param url      注册链接
+/// @return         是否注册成功
 - (BOOL)registTarget:(Class)target withUrl:(NSString *)url;
 
+/// 根据 url 注册 target 类
+/// @param target   注册类
+/// @param url      注册链接
+/// @param force    覆盖注册
+/// @return         是否注册成功
+- (BOOL)registTarget:(Class)target withUrl:(NSString *)url force:(BOOL)force;
+
 /// 根据 protocol 匹配 target 类
+/// @param protocol 注册协议
+/// @return         匹配到的注册类
 - (nullable Class)matchTargetWithProtocol:(Protocol *)protocol;
 
 /// 根据 url 匹配 target 类
+/// @param url      注册链接
+/// @return         匹配到的注册类
 - (nullable Class)matchTargetWithUrl:(NSString *)url;
 
 /// 根据 protocol 匹配 target 实例
+/// @param protocol 注册协议
+/// @return         匹配到的注册类实例
 - (nullable id)matchTargetInstanceWithProtocol:(Protocol *)protocol;
 
 /// 根据 url 匹配 target 实例
+/// @param url      注册链接
+/// @return         匹配到的注册类实例
 - (nullable id)matchTargetInstanceWithUrl:(NSString *)url;
 
 @end

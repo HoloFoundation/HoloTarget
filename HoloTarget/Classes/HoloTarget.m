@@ -86,13 +86,17 @@
 }
 
 - (BOOL)registTarget:(Class)target withProtocol:(Protocol *)protocol {
+    return [self registTarget:target withProtocol:protocol force:NO];
+}
+
+- (BOOL)registTarget:(Class)target withProtocol:(nonnull Protocol *)protocol force:(BOOL)force {
     BOOL isSuccess = YES;
     
     NSString *protocolString = NSStringFromProtocol(protocol);
     if (!target || !protocolString) {
         HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the protocol (%@) is nil.", target, protocolString);
         isSuccess = NO;
-    } else if (self.protocolsMap[protocolString]) {
+    } else if (self.protocolsMap[protocolString] && !force) {
         HoloLog(@"[HoloTarget] Regist failed because the protocol (%@) was already registered.", protocolString);
         isSuccess = NO;
     } else if (![target conformsToProtocol:protocol]) {
@@ -114,13 +118,17 @@
 }
 
 - (BOOL)registTarget:(Class)target withUrl:(NSString *)url {
+    return [self registTarget:target withUrl:url force:NO];
+}
+
+- (BOOL)registTarget:(Class)target withUrl:(NSString *)url force:(BOOL)force {
     BOOL isSuccess = YES;
     
     NSString *path = [url holo_targetUrlPath];
     if (!target || !path) {
         HoloLog(@"[HoloTarget] Regist failed because the target (%@) or the url path (%@) is nil.", target, path);
         isSuccess = NO;
-    } else if (self.urlsMap[path]) {
+    } else if (self.urlsMap[path] && !force) {
         HoloLog(@"[HoloTarget] Regist failed because the url path (%@) was already registered.", path);
         isSuccess = NO;
     }
