@@ -7,6 +7,7 @@
 
 #import "HoloTarget.h"
 #import "YAMLSerialization.h"
+#import "NSObject+HoloTargetUnrecognizedSelector.h"
 
 @interface HoloTarget ()
 
@@ -169,6 +170,8 @@
         return nil;
     }
     
+    [target holo_protectUnrecognizedSelector];
+    
     return target;
 }
 
@@ -194,6 +197,8 @@
         }
         return nil;
     }
+    
+    [target holo_protectUnrecognizedSelector];
     
     return target;
 }

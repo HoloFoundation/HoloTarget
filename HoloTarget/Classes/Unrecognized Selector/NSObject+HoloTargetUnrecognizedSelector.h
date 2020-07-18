@@ -9,13 +9,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HoloTargetStubProxy : NSObject
-
-@end
-
 @interface NSObject (HoloTargetUnrecognizedSelector)
 
-+ (void)holo_setupUnrecognizedSelectorStubProxy;
++ (void)holo_protectUnrecognizedSelector;
+
+- (void)holo_protectUnrecognizedSelector;
 
 @end
 

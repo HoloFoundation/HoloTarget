@@ -10,8 +10,6 @@
 #import "HoloTargteDelegate.h"
 #import "NSString+HoloTargetUrlParser.h"
 #import "HoloTargetMacro.h"
-#import "HoloBaseTarget.h"
-#import "HoloBaseTargetViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
