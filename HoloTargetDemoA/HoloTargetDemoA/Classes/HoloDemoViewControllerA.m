@@ -35,9 +35,9 @@
     return self;
 }
 
-- (void)holoDemoViewControllerA:(NSString *)title {
-    self.title = title;
-    NSLog(@"------- performSelector:holoDemoViewControllerA");
-}
+//- (void)holoDemoViewControllerA:(NSString *)title {
+//    self.title = title;
+//    NSLog(@"------- performSelector:holoDemoViewControllerA");
+//}
 
 @end

@@ -16,7 +16,7 @@ static NSString *const HoloTargetForwardInvocationSelectorName = @"__holoTarget_
 @implementation NSObject (HoloTargetUnrecognizedSelector)
 
 // 判断 cls 是否重写了 sel 方法, 递归调用判断父类但不包括 NSObject
-static BOOL _holo_methodHasOverwrited(Class cls, SEL sel) {
+static BOOL holo_methodHasOverwrited(Class cls, SEL sel) {
     unsigned int methodCount = 0;
     Method *methods = class_copyMethodList(cls, &methodCount);
     for (int i = 0; i < methodCount; i++) {
@@ -29,7 +29,7 @@ static BOOL _holo_methodHasOverwrited(Class cls, SEL sel) {
     free(methods);
     
     if ([cls superclass] != [NSObject class]) {
-        return _holo_methodHasOverwrited([cls superclass], sel);
+        return holo_methodHasOverwrited([cls superclass], sel);
     }
     return NO;
 }
@@ -45,10 +45,10 @@ static Class holoTarget_hookClass(NSObject *self) {
         return baseClass;
         
         // We swizzle a class object, not a single object.
-    }else if (class_isMetaClass(baseClass)) {
+    } else if (class_isMetaClass(baseClass)) {
         return holoTarget_swizzleClassInPlace((Class)self);
         // Probably a KVO'ed class. Swizzle in place. Also swizzle meta classes in place.
-    }else if (statedClass != baseClass) {
+    } else if (statedClass != baseClass) {
         return holoTarget_swizzleClassInPlace(baseClass);
     }
     
@@ -126,14 +126,14 @@ static void __holoTarget_forwardInvocation__(__unsafe_unretained NSObject *self,
 }
 
 + (void)holo_protectUnrecognizedSelector {
-    if (_holo_methodHasOverwrited(self, @selector(forwardInvocation:))) {
+    if (holo_methodHasOverwrited(self, @selector(forwardInvocation:))) {
         return;
     }
     holoTarget_hookClass((id)self);
 }
 
 - (void)holo_protectUnrecognizedSelector {
-    if (_holo_methodHasOverwrited(self.class, @selector(forwardInvocation:))) {
+    if (holo_methodHasOverwrited(self.class, @selector(forwardInvocation:))) {
         return;
     }
     holoTarget_hookClass(self);
