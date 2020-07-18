@@ -121,7 +121,7 @@ static void __holoTarget_forwardInvocation__(__unsafe_unretained NSObject *self,
     
     if ([HoloTarget sharedInstance].delegate &&
         [[HoloTarget sharedInstance].delegate respondsToSelector:@selector(holo_unrecognizedSelectorSentToTarget:selector:)]) {
-        [[HoloTarget sharedInstance].delegate holo_unrecognizedSelectorSentToTarget:[self class] selector:selector];
+        [[HoloTarget sharedInstance].delegate holo_unrecognizedSelectorSentToTarget:self selector:selector];
     }
 }
 
