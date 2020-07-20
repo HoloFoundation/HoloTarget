@@ -1,11 +1,11 @@
 //
-//  NSObject+HoloTargetUnrecognizedSelector.m
+//  NSObject+HoloTargetUnrecognizedSelectorGuard.m
 //  HoloTarget
 //
 //  Created by Honglou Gong on 2020/7/6.
 //
 
-#import "NSObject+HoloTargetUnrecognizedSelector.h"
+#import "NSObject+HoloTargetUnrecognizedSelectorGuard.h"
 #import <objc/runtime.h>
 #import "HoloTarget.h"
 
@@ -13,7 +13,7 @@ static NSString *const HoloTargetSubclassSuffix = @"_holoTarget_";
 
 static NSString *const HoloTargetForwardInvocationSelectorName = @"__holoTarget_forwardInvocation:";
 
-@implementation NSObject (HoloTargetUnrecognizedSelector)
+@implementation NSObject (HoloTargetUnrecognizedSelectorGuard)
 
 // 判断 cls 是否重写了 sel 方法, 递归调用判断父类但不包括 NSObject
 static BOOL holo_methodHasOverwrited(Class cls, SEL sel) {
@@ -125,14 +125,14 @@ static void __holoTarget_forwardInvocation__(__unsafe_unretained NSObject *self,
     }
 }
 
-+ (void)holo_protectUnrecognizedSelector {
++ (void)holo_setupUnrecognizedSelectorGuard {
     if (holo_methodHasOverwrited(self, @selector(forwardInvocation:))) {
         return;
     }
     holoTarget_hookClass((id)self);
 }
 
-- (void)holo_protectUnrecognizedSelector {
+- (void)holo_setupUnrecognizedSelectorGuard {
     if (holo_methodHasOverwrited(self.class, @selector(forwardInvocation:))) {
         return;
     }

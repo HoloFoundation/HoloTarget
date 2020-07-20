@@ -7,7 +7,7 @@
 
 #import "HoloTarget.h"
 #import "YAMLSerialization.h"
-#import "NSObject+HoloTargetUnrecognizedSelector.h"
+#import "NSObject+HoloTargetUnrecognizedSelectorGuard.h"
 
 @interface HoloTarget ()
 
@@ -28,6 +28,14 @@
         sharedInstance = [HoloTarget new];
     });
     return sharedInstance;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.unrecognizedSelectorGuard = HoloTargetUnrecognizedSelectorGuardOnline;
+    }
+    return self;
 }
 
 - (void)registAllTargetsFromYAML {
@@ -170,7 +178,9 @@
         return nil;
     }
     
-    [target holo_protectUnrecognizedSelector];
+    if (self.unrecognizedSelectorGuard == HoloTargetUnrecognizedSelectorGuardOnline) {
+        [target holo_setupUnrecognizedSelectorGuard];
+    }
     
     return target;
 }
@@ -198,7 +208,9 @@
         return nil;
     }
     
-    [target holo_protectUnrecognizedSelector];
+    if (self.unrecognizedSelectorGuard == HoloTargetUnrecognizedSelectorGuardOnline) {
+        [target holo_setupUnrecognizedSelectorGuard];
+    }
     
     return target;
 }

@@ -13,6 +13,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, HoloTargetUnrecognizedSelectorGuard) {
+    HoloTargetUnrecognizedSelectorGuardNone,
+    HoloTargetUnrecognizedSelectorGuardOnline // default
+};
+
 @interface HoloTarget : NSObject
 
 /// 单例实现方法
@@ -23,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 业务 scheme, 用于判断 url scheme 控制跳转
 @property (nonatomic, copy) NSString *businessScheme;
+
+/// Unrecognized Selector 崩溃保护, 默认添加保护
+@property (nonatomic, assign) HoloTargetUnrecognizedSelectorGuard unrecognizedSelectorGuard;
 
 /// 获取各个 Pod 内的 holo_target.yaml 配置文件进行注册 protocol 和 url
 /// Requirement :  在主工程编译期 (Build Phases) 执行 holo_target_generator.rb 脚本
