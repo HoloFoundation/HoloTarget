@@ -12,6 +12,7 @@
 // [注意]:
 // 该防护措施仅对当前类遵守了协议，但未实现协议方法，并调用了协议方法造成的崩溃有效
 // 这种情况的 Unrecognized Selector Crash 会调用 forwardInvocation: 方法
+// 恰好 HoloTarget 强制要求当前类遵守了 Protocol 才能注册成功
 
 static NSString *const HoloTargetSubclassSuffix = @"_holoTarget_";
 
