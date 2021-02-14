@@ -1,6 +1,6 @@
 # HoloTarget
 
-[![CI Status](https://img.shields.io/travis/gonghonglou/HoloTarget.svg?style=flat)](https://travis-ci.org/gonghonglou/HoloTarget)
+[![CI Status](https://img.shields.io/travis/HoloFoundation/HoloTarget.svg?style=flat)](https://travis-ci.org/HoloFoundation/HoloTarget)
 [![Version](https://img.shields.io/cocoapods/v/HoloTarget.svg?style=flat)](https://cocoapods.org/pods/HoloTarget)
 [![License](https://img.shields.io/cocoapods/l/HoloTarget.svg?style=flat)](https://cocoapods.org/pods/HoloTarget)
 [![Platform](https://img.shields.io/cocoapods/p/HoloTarget.svg?style=flat)](https://cocoapods.org/pods/HoloTarget)
