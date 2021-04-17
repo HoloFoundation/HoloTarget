@@ -2,7 +2,7 @@ PODS:
   - Aspects (1.4.1)
   - HoloLifecycle (2.1.0):
     - Aspects
-  - HoloTarget (0.3.0):
+  - HoloTarget (0.3.1):
     - YAML-Framework
   - HoloTargetDemoA (0.1.0):
     - HoloLifecycle
@@ -42,7 +42,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   HoloLifecycle: 4a59204573fcc37f9b75a87d0e1ecbf900774d75
-  HoloTarget: 18a3ba8422a345c8b1e0852c0e6c3a80cae064de
+  HoloTarget: e017a2e2247b506089480c433bcfd6a3b958aecc
   HoloTargetDemoA: f80c6fc2431acb20b6fec93296dce12e0ea1756d
   HoloTargetDemoB: 13645ea889e3de55e66cd3744a047270fd0a9194
   HoloTargetProtocolPool: 34c1ca43684692b602d0dfe57fc712fa0d9c07c0
@@ -51,4 +51,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b54dd3df3ed63f6297bcb6c020ac58a9793f47e5
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1
