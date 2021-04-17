@@ -54,6 +54,7 @@ static NSDictionary *kHoloTargetUrlParams    = nil;
     }
     
     if (target.length <= 0) return;
+    target = [target _holo_filterPrefixSuffix];
     
     NSString *paramString = nil;
     if ([self containsString:@"?"]) {
@@ -63,8 +64,12 @@ static NSDictionary *kHoloTargetUrlParams    = nil;
     } else {
         kHoloTargetUrlPath = target;
     }
+    if (kHoloTargetUrlPath) {
+        kHoloTargetUrlPath = [kHoloTargetUrlPath _holo_filterPrefixSuffix];
+    }
     
     if (paramString.length <= 0) return;
+    paramString = [paramString _holo_filterPrefixSuffix];
     
     NSMutableDictionary *paramDict = [NSMutableDictionary new];
     NSArray *paramArray = [paramString componentsSeparatedByString:@"&"];
@@ -74,6 +79,17 @@ static NSDictionary *kHoloTargetUrlParams    = nil;
     }];
     
     if (paramDict.count > 0) kHoloTargetUrlParams = paramDict.copy;
+}
+
+- (NSString *)_holo_filterPrefixSuffix {
+    NSString *target = self;
+    while ([target hasPrefix:@"/"]) {
+        target = [target substringFromIndex:1];
+    }
+    while ([target hasSuffix:@"/"]) {
+        target = [target substringToIndex:target.length-1];
+    }
+    return target;
 }
 
 @end
